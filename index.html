@@ -3,65 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#111827">
+  <meta name="theme-color" content="#000000">
   <meta name="description" content="Retzef AI — העוזר החכם שאנחנו בונים.">
   <title>Retzef AI</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar" id="sidebar">
-      <div class="brand-row">
-        <div class="brand-mark">R</div>
-        <div class="brand-name">Retzef <span>AI</span></div>
-        <button class="icon-button mobile-close" id="closeSidebar" aria-label="סגור תפריט">×</button>
+  <main class="app">
+    <section class="conversation" id="conversation" aria-live="polite">
+      <div class="messages" id="messages"></div>
+      <div class="quick-actions" id="quickActions">
+        <button class="quick-action" data-prompt="אני רוצה ליצור תמונה: "><span>Create an image</span><span class="action-icon image-icon">▧</span></button>
+        <button class="quick-action" data-prompt="עזור לי לכתוב או לערוך: "><span>Write or edit</span><span class="action-icon">✎</span></button>
+        <button class="quick-action" data-prompt="חפש מידע באינטרנט על: "><span>Search the web</span><span class="action-icon globe">◎</span></button>
       </div>
-      <button class="new-chat" id="newChat"><span>＋</span> שיחה חדשה</button>
-      <div class="side-label">השיחות שלך</div>
-      <div class="history-list" id="historyList">
-        <div class="history-empty">השיחות החדשות יופיעו כאן</div>
+    </section>
+
+    <footer class="composer-area">
+      <div class="composer">
+        <button class="round-tool voice-tool" id="voiceButton" aria-label="מצב קול"><span class="wave">▮</span></button>
+        <button class="mic-tool" id="micButton" aria-label="הקלטת הודעה"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="13" rx="3"></rect><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5M9 21.5h6"></path></svg></button>
+        <textarea id="messageInput" rows="1" placeholder="Ask Retzef AI" aria-label="הודעה ל-Retzef AI"></textarea>
+        <button class="plus-tool" id="plusButton" aria-label="כלים נוספים">＋</button>
       </div>
-      <div class="sidebar-bottom">
-        <div class="model-card">
-          <div class="model-dot"></div>
-          <div><strong>Retzef test 1.0</strong><small>המודל נמצא בפיתוח</small></div>
-        </div>
-        <div class="sidebar-foot">נבנה על ידי Team Retzef</div>
-      </div>
-    </aside>
-
-    <main class="main-panel">
-      <header class="topbar">
-        <button class="icon-button menu-button" id="openSidebar" aria-label="פתח תפריט">☰</button>
-        <div class="top-title">Retzef AI <span class="beta-tag">Preview</span></div>
-        <div class="top-status"><span></span> בפיתוח</div>
-      </header>
-
-      <section class="conversation" id="conversation" aria-live="polite">
-        <div class="welcome" id="welcome">
-          <div class="welcome-orb">R</div>
-          <p class="eyebrow">ברוכים הבאים ל־Retzef AI</p>
-          <h1>מה נעשה היום?</h1>
-          <p class="welcome-copy">זהו הממשק של ה־AI שאנחנו בונים. המודל העצמאי שלנו עדיין בתהליך פיתוח וחיבור.</p>
-          <div class="suggestions">
-            <button class="suggestion" data-prompt="תסביר לי איך עובד בינה מלאכותית">✦ <span>ללמוד משהו חדש</span></button>
-            <button class="suggestion" data-prompt="תעזור לי לחשוב על רעיון לפרויקט">⌘ <span>לחשוב על רעיון</span></button>
-            <button class="suggestion" data-prompt="תעזור לי לכתוב תוכנית מסודרת">☷ <span>לכתוב תוכנית</span></button>
-          </div>
-        </div>
-        <div class="messages" id="messages"></div>
-      </section>
-
-      <footer class="composer-wrap">
-        <div class="composer" id="composer">
-          <textarea id="messageInput" rows="1" placeholder="שלחו הודעה אל Retzef AI..." aria-label="הודעה ל-Retzef AI"></textarea>
-          <button class="send-button" id="sendButton" aria-label="שלח הודעה" disabled>↑</button>
-        </div>
-        <div class="composer-note">Retzef AI עדיין בפיתוח. כרגע המודל לא מחובר ולכן לא ייווצרו תשובות AI אמיתיות.</div>
-      </footer>
-    </main>
-  </div>
-  <div class="mobile-backdrop" id="backdrop"></div>
+      <div class="tool-popover" id="toolPopover" hidden>אפשרויות נוספות יתווספו בהמשך</div>
+      <div class="disclaimer" id="disclaimer">Retzef AI · Retzef test 1.0 עדיין בפיתוח</div>
+    </footer>
+  </main>
   <script src="/app.js" defer></script>
 </body>
 </html>
