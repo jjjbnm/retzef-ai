@@ -3,7 +3,7 @@ const KEY="retzef-ai-chats-v1";let chats=[];let active=null;
 try{chats=JSON.parse(localStorage.getItem(KEY)||"[]")}catch{chats=[]}
 const save=()=>localStorage.setItem(KEY,JSON.stringify(chats));
 const current=()=>chats.find(c=>c.id===active);
-function renderHistory(){history.innerHTML="";if(!chats.length){const e=document.createElement("div");e.className="empty-history";e.textContent="השיחות שלך יופיעו כאן";history.append(e);return}chats.slice().reverse().forEach(c=>{const b=document.createElement("button");b.className="history-item"+(c.id===active?" active":"");b.textContent=c.title; b.onclick=()=>openChat(c.id);history.append(b)})}
+function renderHistory(){history.innerHTML="";if(!chats.length){const e=document.createElement("div");e.className="empty-history";e.textContent="השיחות שלך יופיעו כאן";history.append(e);return}chats.slice().reverse().forEach(c=>{const b=document.createElement("button");b.className="history-item"+(c.id===active?" active":"");b.textContent=c.title;b.onclick=()=>openChat(c.id);history.append(b)})}
 function newChat(){active=null;messages.innerHTML="";welcome.hidden=false;renderHistory();closeSide();input.focus()}
 function openChat(id){active=id;const c=current();if(!c)return;messages.innerHTML="";welcome.hidden=true;c.messages.forEach(m=>append(m.role,m.text));renderHistory();closeSide()}
 function append(role,text,notice=false){const row=document.createElement("div");row.className="message "+role;const avatar=document.createElement("div");avatar.className="avatar";avatar.textContent=role==="user"?"א":"R";const bubble=document.createElement("div");bubble.className="bubble";bubble.textContent=text;row.append(avatar,bubble);messages.append(row);if(notice){const n=document.createElement("div");n.className="notice";n.textContent="Retzef test 1.0 עדיין לא מחובר. ההודעה נשמרה, אך לא נוצרה תשובת AI.";messages.append(n)}$("chatArea").scrollTop=$("chatArea").scrollHeight}
@@ -13,8 +13,14 @@ function resize(){input.style.height="auto";input.style.height=Math.min(input.sc
 function openSide(){$("sidebar").classList.add("open");$("shade").classList.add("show")}
 function closeSide(){$("sidebar").classList.remove("open");$("shade").classList.remove("show")}
 function toast(t){const el=$("toast");el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),1800)}
+function closeAccountMenu(){const menu=$("accountMenu"),btn=$("profileMore");menu.hidden=true;btn.setAttribute("aria-expanded","false")}
+function toggleAccountMenu(){const menu=$("accountMenu"),btn=$("profileMore"),open=menu.hidden;menu.hidden=!open;btn.setAttribute("aria-expanded",String(open))}
 $("newChat").onclick=newChat;$("sendBtn").onclick=sendMessage;input.addEventListener("input",resize);input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
-$("openSide").onclick=openSide;$("closeSide").onclick=closeSide;$("shade").onclick=closeSide;
+$("openSide").onclick=openSide;$("closeSide").onclick=closeSide;$("shade").onclick=()=>{closeSide();closeAccountMenu()};
+$("profileMore").onclick=e=>{e.stopPropagation();toggleAccountMenu()};
+document.addEventListener("click",e=>{if(!e.target.closest(".profile-wrap"))closeAccountMenu()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAccountMenu()});
+document.querySelectorAll("[data-menu]").forEach(b=>b.addEventListener("click",()=>{const action=b.dataset.menu;closeAccountMenu();if(action==="settings")toast("ההגדרות יתווספו בקרוב");if(action==="personalize")toast("אפשרויות ההתאמה האישית יתווספו בקרוב");if(action==="help")toast("מרכז העזרה של Retzef AI יתווסף בקרוב")}));
 $("attachBtn").onclick=()=>toast("אפשרות צירוף קבצים תתווסף בהמשך");$("micBtn").onclick=()=>toast("הקלטה קולית תתווסף בהמשך");$("shareBtn").onclick=()=>{if(navigator.share)navigator.share({title:"Retzef AI",url:location.href}).catch(()=>{});else toast("אפשר להעתיק את כתובת האתר לשיתוף")};
 $("searchChats").onclick=()=>{const q=prompt("חיפוש בשיחות");if(!q)return;const c=chats.find(x=>x.title.toLowerCase().includes(q.toLowerCase()));if(c)openChat(c.id);else toast("לא נמצאו שיחות מתאימות")};
 renderHistory();

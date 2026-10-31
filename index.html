@@ -11,24 +11,24 @@
   <button class="new-chat" id="newChat"><span>＋</span> שיחה חדשה</button>
   <button class="side-action" id="searchChats"><span>⌕</span> חיפוש שיחות</button>
   <div class="history-title">השיחות האחרונות</div><div class="history" id="historyList"><div class="empty-history">השיחות שלך יופיעו כאן</div></div>
-  <div class="profile"><div class="profile-avatar">R</div><div><b>Retzef AI</b><small>Retzef test 1.0 · בפיתוח</small></div><span class="profile-more">•••</span></div>
+  <div class="profile-wrap">
+   <div class="profile"><div class="profile-avatar">R</div><div class="profile-name"><b>Retzef AI</b><small>Retzef test 1.0 · בפיתוח</small></div><button class="profile-more" id="profileMore" aria-label="אפשרויות נוספות" aria-expanded="false">•••</button></div>
+   <div class="account-menu" id="accountMenu" hidden>
+    <div class="menu-account"><div class="profile-avatar">R</div><div><b>Retzef AI</b><small>החשבון שלך</small></div></div>
+    <div class="menu-divider"></div>
+    <button class="account-menu-item" data-menu="personalize"><span>✧</span> התאמה אישית</button>
+    <button class="account-menu-item" data-menu="settings"><span>⚙</span> הגדרות</button>
+    <button class="account-menu-item" data-menu="help"><span>?</span> עזרה ותמיכה</button>
+    <div class="menu-divider"></div>
+    <div class="menu-version">Retzef AI · Preview</div>
+   </div>
+  </div>
  </aside>
  <div class="shade" id="shade"></div>
  <main class="main">
-  <header class="topbar">
-   <button class="icon-btn menu-btn" id="openSide" aria-label="תפריט">☰</button>
-   <div class="mobile-brand">Retzef AI <span>Preview</span></div>
-   <div class="top-left"><span class="model-name">Retzef AI</span><span class="chevron">⌄</span></div>
-   <button class="share-btn" id="shareBtn">↗ <span>שתף</span></button>
-  </header>
-  <section class="chat-area" id="chatArea">
-   <div class="welcome" id="welcome"><div class="welcome-mark">R</div><h1>במה אפשר לעזור?</h1></div>
-   <div class="messages" id="messages" aria-live="polite"></div>
-  </section>
-  <footer class="composer-zone">
-   <div class="composer"><button class="plus-btn" id="attachBtn" aria-label="הוספה">＋</button><textarea id="messageInput" rows="1" placeholder="שאלו את Retzef AI" aria-label="כתיבת הודעה"></textarea><button class="mic-btn" id="micBtn" aria-label="מיקרופון">♩</button><button class="send-btn" id="sendBtn" aria-label="שליחה" disabled>↑</button></div>
-   <div class="composer-disclaimer">Retzef AI עדיין בפיתוח. התשובות יופעלו לאחר חיבור המודל העצמאי.</div>
-  </footer>
+  <header class="topbar"><button class="icon-btn menu-btn" id="openSide" aria-label="תפריט">☰</button><div class="mobile-brand">Retzef AI <span>Preview</span></div><div class="top-left"><span class="model-name">Retzef AI</span><span class="chevron">⌄</span></div><button class="share-btn" id="shareBtn">↗ <span>שתף</span></button></header>
+  <section class="chat-area" id="chatArea"><div class="welcome" id="welcome"><div class="welcome-mark">R</div><h1>במה אפשר לעזור?</h1></div><div class="messages" id="messages" aria-live="polite"></div></section>
+  <footer class="composer-zone"><div class="composer"><button class="plus-btn" id="attachBtn" aria-label="הוספה">＋</button><textarea id="messageInput" rows="1" placeholder="שאלו את Retzef AI" aria-label="כתיבת הודעה"></textarea><button class="mic-btn" id="micBtn" aria-label="מיקרופון">♩</button><button class="send-btn" id="sendBtn" aria-label="שליחה" disabled>↑</button></div><div class="composer-disclaimer">Retzef AI עדיין בפיתוח. התשובות יופעלו לאחר חיבור המודל העצמאי.</div></footer>
  </main>
 </div>
 <div class="toast" id="toast"></div><script src="/app.js" defer></script>
