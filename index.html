@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#212121">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#212121">
 <meta name="description" content="Retzef AI — העוזר החכם שלנו"><title>Retzef AI</title><link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -22,23 +22,14 @@
    <button class="share-btn" id="shareBtn">↗ <span>שתף</span></button>
   </header>
   <section class="chat-area" id="chatArea">
-   <div class="welcome" id="welcome">
-    <div class="welcome-mark">R</div>
-    <h1>במה אפשר לעזור?</h1>
-   </div>
+   <div class="welcome" id="welcome"><div class="welcome-mark">R</div><h1>במה אפשר לעזור?</h1></div>
    <div class="messages" id="messages" aria-live="polite"></div>
   </section>
   <footer class="composer-zone">
-   <div class="composer">
-    <button class="plus-btn" id="attachBtn" aria-label="הוספה">＋</button>
-    <textarea id="messageInput" rows="1" placeholder="שאלו את Retzef AI" aria-label="כתיבת הודעה"></textarea>
-    <button class="mic-btn" id="micBtn" aria-label="מיקרופון">♩</button>
-    <button class="send-btn" id="sendBtn" aria-label="שליחה" disabled>↑</button>
-   </div>
+   <div class="composer"><button class="plus-btn" id="attachBtn" aria-label="הוספה">＋</button><textarea id="messageInput" rows="1" placeholder="שאלו את Retzef AI" aria-label="כתיבת הודעה"></textarea><button class="mic-btn" id="micBtn" aria-label="מיקרופון">♩</button><button class="send-btn" id="sendBtn" aria-label="שליחה" disabled>↑</button></div>
    <div class="composer-disclaimer">Retzef AI עדיין בפיתוח. התשובות יופעלו לאחר חיבור המודל העצמאי.</div>
   </footer>
  </main>
 </div>
-<div class="toast" id="toast"></div>
-<script src="/app.js" defer></script>
+<div class="toast" id="toast"></div><script src="/app.js" defer></script>
 </body></html>
