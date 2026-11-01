@@ -1,0 +1,12 @@
+{
+  "model_name": "Retzef test 1.0",
+  "vocab_size": 512,
+  "block_size": 128,
+  "n_embd": 96,
+  "n_head": 4,
+  "n_layer": 2,
+  "dropout": 0.1,
+  "learning_rate": 0.0005,
+  "batch_size": 16,
+  "max_steps": 500
+}

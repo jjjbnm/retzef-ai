@@ -1,0 +1,10 @@
+שלום. אני רטזף טסט 1.0.
+שלום, איך אפשר לעזור?
+אני לומד ליצור טקסט מתוך דוגמאות.
+מודל שפה לומד לזהות דפוסים בנתוני אימון.
+למידת מכונה דורשת נתונים, אימון ובדיקה.
+עברית היא שפה שנכתבת מימין לשמאל.
+Hello. I am Retzef test 1.0.
+A language model learns patterns from training text.
+This is a small experiment, not a finished assistant.
+The model predicts the next character in a sequence.
