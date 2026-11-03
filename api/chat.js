@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return res.status(503).json({ message: "Gemini API key is not configured on the server." });
+    return res.status(503).json({ message: "GEMINI_API_KEY is missing from the Vercel server environment." });
   }
 
   const prefs = req.body?.personalization && typeof req.body.personalization === "object"
@@ -49,10 +49,7 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: systemInstruction }] },
           contents: [{ role: "user", parts: [{ text: message }] }],
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 800
-          }
+          generationConfig: { temperature: 0.7, maxOutputTokens: 800 }
         })
       }
     );
@@ -60,11 +57,12 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Gemini API request failed:", response.status, data?.error?.status || "unknown");
+      const providerMessage = typeof data?.error?.message === "string"
+        ? data.error.message.slice(0, 350)
+        : (data?.error?.status || "Unknown provider error");
+      console.error("Gemini API error", response.status, providerMessage);
       return res.status(response.status === 429 ? 429 : 502).json({
-        message: response.status === 429
-          ? "Gemini usage limit reached. Please try again later."
-          : "Gemini could not answer. Check the API configuration and model availability."
+        message: "Gemini API error (" + response.status + "): " + providerMessage
       });
     }
 
@@ -74,7 +72,8 @@ export default async function handler(req, res) {
       .trim();
 
     if (!reply) {
-      return res.status(502).json({ message: "Gemini returned an empty response." });
+      const reason = data?.promptFeedback?.blockReason || data?.candidates?.[0]?.finishReason || "No text returned";
+      return res.status(502).json({ message: "Gemini returned no text: " + String(reason).slice(0, 120) });
     }
 
     return res.status(200).json({ reply, model: "gemini-2.5-flash" });
