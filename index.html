@@ -43,5 +43,24 @@
   <div class="subpage" id="subpage" hidden></div>
  </div>
 </section>
-<div class="toast" id="toast"></div><script src="/app.js" defer></script>
+<div class="toast" id="toast"></div>
+
+<section class="auth-screen" id="authScreen" hidden>
+ <div class="auth-card">
+  <div class="auth-logo">R</div>
+  <h1>Retzef AI</h1>
+  <p class="auth-subtitle" id="authSubtitle">התחבר לחשבון שלך כדי לשמור שיחות בענן</p>
+  <div class="auth-tabs"><button type="button" id="loginTab" class="active">Login</button><button type="button" id="registerTab">Sign Up</button></div>
+  <form id="authForm">
+   <label for="authUsername">Username</label><input id="authUsername" name="username" autocomplete="username" minlength="3" maxlength="24" required placeholder="שם משתמש">
+   <label for="authPassword">Password</label><input id="authPassword" name="password" type="password" autocomplete="current-password" minlength="10" maxlength="128" required placeholder="סיסמה">
+   <div id="confirmWrap" hidden><label for="authConfirm">Confirm password</label><input id="authConfirm" type="password" autocomplete="new-password" minlength="10" maxlength="128" placeholder="אימות סיסמה"></div>
+   <p class="auth-error" id="authError" role="alert"></p>
+   <button class="auth-submit" id="authSubmit" type="submit">Login</button>
+  </form>
+  <small class="auth-note">הסיסמה נשמרת כ־Hash מאובטח. אל תשתף אותה עם אף אחד.</small>
+ </div>
+</section>
+
+<script src="/account.js" defer></script><script src="/app.js" defer></script>
 </body></html>

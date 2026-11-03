@@ -37,3 +37,6 @@ $("newChat").onclick=newChat;$("sendBtn").onclick=sendMessage;input.addEventList
 document.querySelectorAll("[data-page]").forEach(b=>b.onclick=()=>showPage(b.dataset.page));$("settingsSearch").addEventListener("input",e=>{const q=e.target.value.trim().toLowerCase();document.querySelectorAll("[data-page]").forEach(b=>b.hidden=!b.textContent.toLowerCase().includes(q))});
 $("attachBtn").onclick=()=>toast("אפשרות צירוף קבצים תתווסף בהמשך");$("micBtn").onclick=()=>toast("הקלטה קולית תתווסף בהמשך");$("shareBtn").onclick=()=>{if(navigator.share)navigator.share({title:"Retzef AI",url:location.href}).catch(()=>{});else toast("אפשר להעתיק את כתובת האתר לשיתוף")};$("searchChats").onclick=()=>{const q=prompt("חיפוש בשיחות");if(!q)return;const c=chats.find(x=>x.title.toLowerCase().includes(q.toLowerCase()));if(c)openChat(c.id);else toast("לא נמצאו שיחות")};renderHistory();
 if(new URLSearchParams(location.search).get("discord")==="connected"){showSettings();showPage("plugins");refreshDiscordStatus().then(ok=>{if(ok)toast("Plugin connected successfully! ✓")})}
+window.__retzefGetChats = () => chats;
+window.__retzefSetChats = (next) => { chats = Array.isArray(next) ? next : []; active = null; save(); renderHistory(); };
+if (window.RetzefAuth) window.RetzefAuth.onAppReady();
