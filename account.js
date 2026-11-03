@@ -74,6 +74,14 @@
       $("authSubmit").disabled = false;
     }
   });
-  window.RetzefAuth = { onAppReady: init, logout: async () => { await api("/api/auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "logout" }) }); lock(); } };
+  async function logout() {
+    await api("/api/auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "logout" }) });
+    const settings = $("settingsScreen");
+    if (settings) settings.hidden = true;
+    lock();
+  }
+  const logoutButton = $("logoutBtn");
+  if (logoutButton) logoutButton.addEventListener("click", () => logout().catch(error => { $("authError").textContent = error.message; lock(); }));
+  window.RetzefAuth = { onAppReady: init, logout };
   setMode("login");
 })();

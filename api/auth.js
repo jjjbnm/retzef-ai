@@ -18,6 +18,13 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true });
     }
 
+    const ip = String(req.headers["x-forwarded-for"] || "unknown").split(",")[0].trim().slice(0, 64);
+    const bucket = Math.floor(Date.now() / 60000);
+    const rateKey = "retzef:auth-rate:" + (await import("node:crypto")).createHash("sha256").update(ip + ":" + bucket).digest("hex");
+    const attempts = Number(await redisCommand(["INCR", rateKey]));
+    if (attempts === 1) await redisCommand(["EXPIRE", rateKey, 60]);
+    if (attempts > 15) return res.status(429).json({ message: "יותר מדי ניסיונות. נסה שוב בעוד דקה." });
+
     const username = typeof req.body?.username === "string" ? req.body.username.trim() : "";
     const password = typeof req.body?.password === "string" ? req.body.password : "";
 
