@@ -28,13 +28,18 @@ export default async function handler(req, res) {
   ].join("\n");
 
   try {
-    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent", {
+    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
       body: JSON.stringify({
-        systemInstruction: { parts: [{ text: systemInstruction }] },
-        contents: [{ role: "user", parts: [{ text: message }] }],
-        generationConfig: { temperature: 0.7, maxOutputTokens: 800 }
+        model: "gemini-3.8-flash",
+        input: message,
+        system_instruction: systemInstruction,
+        generation_config: {
+          temperature: 0.7,
+          max_output_tokens: 800,
+          thinking_level: "low"
+        }
       })
     });
     const data = await response.json();
@@ -43,9 +48,14 @@ export default async function handler(req, res) {
       console.error("Gemini API error", response.status, providerMessage);
       return res.status(response.status === 429 ? 429 : 502).json({ message: "Gemini API error (" + response.status + "): " + providerMessage });
     }
-    const reply = (data.candidates?.[0]?.content?.parts || []).map(part => typeof part.text === "string" ? part.text : "").join("").trim();
+    const reply = (data.steps || [])
+      .filter(step => step?.type === "model_output")
+      .flatMap(step => Array.isArray(step.content) ? step.content : [])
+      .map(part => typeof part.text === "string" ? part.text : "")
+      .join("")
+      .trim();
     if (!reply) {
-      const reason = data?.promptFeedback?.blockReason || data?.candidates?.[0]?.finishReason || "No text returned";
+      const reason = data?.status || data?.errors?.[0]?.message || "No text returned";
       return res.status(502).json({ message: "Gemini returned no text: " + String(reason).slice(0, 120) });
     }
 
@@ -68,7 +78,7 @@ export default async function handler(req, res) {
       console.error("Cloud chat save failed:", storageError?.message || "unknown");
     }
 
-    return res.status(200).json({ reply, model: "gemini-2.5-flash" });
+    return res.status(200).json({ reply, model: "gemini-3.8-flash" });
   } catch (error) {
     console.error("Gemini connection error:", error?.message || "unknown");
     return res.status(502).json({ message: "Could not connect to Gemini right now." });
