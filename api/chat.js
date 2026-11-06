@@ -1,5 +1,3 @@
-import { getSession, readChats, setPrivateHeaders, writeChats } from "./_lib.js";
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -59,24 +57,7 @@ export default async function handler(req, res) {
       return res.status(502).json({ message: "Gemini returned no text: " + String(reason).slice(0, 120) });
     }
 
-    try {
-      const session = await getSession(req);
-      const conversationId = typeof req.body?.conversation_id === "string" ? req.body.conversation_id.slice(0, 80) : "";
-      if (session && conversationId) {
-        const chats = await readChats(session.userId);
-        let chat = chats.find(item => item.id === conversationId);
-        if (!chat) {
-          chat = { id: conversationId, title: message.slice(0, 32) || "שיחה חדשה", messages: [] };
-          chats.push(chat);
-        }
-        chat.messages = Array.isArray(chat.messages) ? chat.messages : [];
-        chat.messages.push({ role: "user", text: message }, { role: "assistant", text: reply });
-        chat.messages = chat.messages.slice(-200);
-        await writeChats(session.userId, chats.slice(-50));
-      }
-    } catch (storageError) {
-      console.error("Cloud chat save failed:", storageError?.message || "unknown");
-    }
+
 
     return res.status(200).json({ reply, model: "gemini-3.8-flash" });
   } catch (error) {
