@@ -33,7 +33,7 @@ export default async function handler(req, res) {
   ].join("\n");
 
   try {
-    const response = await fetch("https://retzef-brain-rer878tvp-helpme9284772-7829s-projects.vercel.app/api/v1/chat", {
+    const response = await fetch("https://retzef-brain.vercel.app/api/v1/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
